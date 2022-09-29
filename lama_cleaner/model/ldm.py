@@ -4,20 +4,20 @@ import numpy as np
 import torch
 from loguru import logger
 
-from lama_cleaner.model.base import InpaintModel
-from lama_cleaner.model.ddim_sampler import DDIMSampler
-from lama_cleaner.model.plms_sampler import PLMSSampler
-from lama_cleaner.schema import Config, LDMSampler
+from model.base import InpaintModel
+from model.ddim_sampler import DDIMSampler
+from model.plms_sampler import PLMSSampler
+from schema import Config, LDMSampler
 
 torch.manual_seed(42)
 import torch.nn as nn
-from lama_cleaner.helper import (
+from helper import (
     download_model,
     norm_img,
     get_cache_path_by_url,
     load_jit_model,
 )
-from lama_cleaner.model.utils import (
+from model.utils import (
     make_beta_schedule,
     timestep_embedding,
 )

@@ -8,11 +8,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.checkpoint as checkpoint
 
-from lama_cleaner.helper import load_model, get_cache_path_by_url, norm_img
-from lama_cleaner.model.base import InpaintModel
-from lama_cleaner.model.utils import setup_filter, Conv2dLayer, FullyConnectedLayer, conv2d_resample, bias_act, \
+from helper import load_model, get_cache_path_by_url, norm_img
+from model.base import InpaintModel
+from model.utils import setup_filter, Conv2dLayer, FullyConnectedLayer, conv2d_resample, bias_act, \
     upsample2d, activation_funcs, MinibatchStdLayer, to_2tuple, normalize_2nd_moment
-from lama_cleaner.schema import Config
+from schema import Config
 
 
 class ModulatedConv2d(nn.Module):

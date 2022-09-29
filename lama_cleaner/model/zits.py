@@ -6,11 +6,11 @@ import skimage
 import torch
 import torch.nn.functional as F
 
-from lama_cleaner.helper import get_cache_path_by_url, load_jit_model
-from lama_cleaner.schema import Config
+from helper import get_cache_path_by_url, load_jit_model
+from schema import Config
 import numpy as np
 
-from lama_cleaner.model.base import InpaintModel
+from model.base import InpaintModel
 
 ZITS_INPAINT_MODEL_URL = os.environ.get(
     "ZITS_INPAINT_MODEL_URL",

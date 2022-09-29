@@ -5,8 +5,8 @@ import cv2
 import torch
 from loguru import logger
 
-from lama_cleaner.helper import boxes_from_mask, resize_max_size, pad_img_to_modulo
-from lama_cleaner.schema import Config, HDStrategy
+from helper import boxes_from_mask, resize_max_size, pad_img_to_modulo
+from schema import Config, HDStrategy
 
 
 class InpaintModel:

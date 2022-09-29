@@ -6,14 +6,14 @@ import torch
 import numpy as np
 import torch.fft as fft
 
-from lama_cleaner.schema import Config
+from schema import Config
 
-from lama_cleaner.helper import load_model, get_cache_path_by_url, norm_img, boxes_from_mask, resize_max_size
-from lama_cleaner.model.base import InpaintModel
+from helper import load_model, get_cache_path_by_url, norm_img, boxes_from_mask, resize_max_size
+from model.base import InpaintModel
 from torch import conv2d, nn
 import torch.nn.functional as F
 
-from lama_cleaner.model.utils import setup_filter, _parse_scaling, _parse_padding, Conv2dLayer, FullyConnectedLayer, \
+from model.utils import setup_filter, _parse_scaling, _parse_padding, Conv2dLayer, FullyConnectedLayer, \
     MinibatchStdLayer, activation_funcs, conv2d_resample, bias_act, upsample2d, normalize_2nd_moment, downsample2d
 
 

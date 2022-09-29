@@ -1,6 +1,6 @@
 import cv2
-from lama_cleaner.model.base import InpaintModel
-from lama_cleaner.schema import Config
+from model.base import InpaintModel
+from schema import Config
 
 class OpenCV2(InpaintModel):
     pad_mod = 1

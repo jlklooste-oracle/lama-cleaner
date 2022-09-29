@@ -1,11 +1,11 @@
-from lama_cleaner.model.fcf import FcF
-from lama_cleaner.model.lama import LaMa
-from lama_cleaner.model.ldm import LDM
-from lama_cleaner.model.mat import MAT
-from lama_cleaner.model.sd import SD14
-from lama_cleaner.model.zits import ZITS
-from lama_cleaner.model.opencv2 import OpenCV2
-from lama_cleaner.schema import Config
+from model.fcf import FcF
+from model.lama import LaMa
+from model.ldm import LDM
+from model.mat import MAT
+from model.sd import SD14
+from model.zits import ZITS
+from model.opencv2 import OpenCV2
+from schema import Config
 
 models = {"lama": LaMa, "ldm": LDM, "zits": ZITS, "mat": MAT, "fcf": FcF, "sd1.4": SD14, "cv2": OpenCV2}
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-
+import logging
+import sys
 import io
 import logging
 import multiprocessing
@@ -15,8 +16,8 @@ import torch
 import numpy as np
 from loguru import logger
 
-from lama_cleaner.model_manager import ModelManager
-from lama_cleaner.schema import Config
+from model_manager import ModelManager
+from schema import Config
 
 try:
     torch._C._jit_override_can_fuse_on_cpu(False)
@@ -33,7 +34,7 @@ from flask import Flask, request, send_file, cli, make_response
 cli.show_server_banner = lambda *_: None
 from flask_cors import CORS
 
-from lama_cleaner.helper import (
+from helper import (
     load_img,
     numpy_to_bytes,
     resize_max_size,
@@ -165,6 +166,8 @@ def process():
 
 @app.route("/model")
 def current_model():
+    print("route model", file=sys.stderr)
+    app.logger.warning('testing warning log')
     return model.name, 200
 
 
@@ -207,15 +210,19 @@ def set_input_photo():
 
 
 def main(args):
+    print('Server.py, main', file=sys.stderr)
+    app.logger.warning('testing warning log')
     global model
     global device
     global input_image_path
 
-    device = torch.device(args.device)
+    device = "cpu" #torch.device(args.device)
     input_image_path = args.input
+    
+    print("defaulting model to lama", file=sys.stderr)
 
     model = ModelManager(
-        name=args.model,
+        name="lama", #args.model,
         device=device,
         hf_access_token=args.hf_access_token,
         callbacks=[diffuser_callback],
@@ -232,3 +239,4 @@ def main(args):
     else:
         # TODO: socketio
         app.run(host=args.host, port=args.port, debug=args.debug)
+

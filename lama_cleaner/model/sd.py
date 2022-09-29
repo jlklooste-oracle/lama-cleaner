@@ -7,10 +7,10 @@ import torch
 from diffusers import PNDMScheduler, DDIMScheduler
 from loguru import logger
 
-from lama_cleaner.helper import norm_img
+from helper import norm_img
 
-from lama_cleaner.model.base import InpaintModel
-from lama_cleaner.schema import Config, SDSampler
+from model.base import InpaintModel
+from schema import Config, SDSampler
 
 
 #

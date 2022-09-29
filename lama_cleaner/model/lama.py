@@ -5,9 +5,9 @@ import numpy as np
 import torch
 from loguru import logger
 
-from lama_cleaner.helper import pad_img_to_modulo, download_model, norm_img, get_cache_path_by_url
-from lama_cleaner.model.base import InpaintModel
-from lama_cleaner.schema import Config
+from helper import pad_img_to_modulo, download_model, norm_img, get_cache_path_by_url
+from model.base import InpaintModel
+from schema import Config
 
 LAMA_MODEL_URL = os.environ.get(
     "LAMA_MODEL_URL",
