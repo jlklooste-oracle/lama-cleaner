@@ -89,7 +89,10 @@ def load_img(img_bytes, gray: bool = False):
     if gray:
         np_img = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
     else:
-        np_img = cv2.imdecode(nparr, cv2.IMREAD_UNCHANGED)
+        np_img = cv2.imdecode(nparr, cv2.IMREAD_COLOR) #IMREAD_UNCHANGED)
+        logger.info(f"np_img.shape {np_img.shape}")
+
+        
         if len(np_img.shape) == 3 and np_img.shape[2] == 4:
             alpha_channel = np_img[:, :, -1]
             np_img = cv2.cvtColor(np_img, cv2.COLOR_BGRA2RGB)
