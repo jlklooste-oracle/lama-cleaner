@@ -37,6 +37,7 @@ def ceil_modulo(x, mod):
 
 
 def load_jit_model(url_or_path, device):
+    print("load_jit_model, device", device)
     if os.path.exists(url_or_path):
         model_path = url_or_path
     else:
@@ -61,6 +62,8 @@ def load_model(model: torch.nn.Module, url_or_path, device):
 
     try:
         state_dict = torch.load(model_path, map_location='cpu')
+        #print("load_model, device", device)
+        #state_dict = torch.load(model_path, map_location='cuda:0')
         model.load_state_dict(state_dict, strict=True)
         model.to(device)
         logger.info(f"Load model from: {model_path}")

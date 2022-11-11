@@ -225,9 +225,13 @@ def main(args):
     global device
     global input_image_path
 
-    device = "cpu" #torch.device(args.device)
+
+    device = torch.device(args.device)
     input_image_path = args.input
     
+    logger.info("server.py")
+    logger.info(device)
+
     print("defaulting model to lama", file=sys.stderr)
 
     model = ModelManager(
