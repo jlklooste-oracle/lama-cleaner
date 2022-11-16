@@ -20,6 +20,8 @@ class InpaintModel:
         Args:
             device:
         """
+        logger.info("base.py, __init__")
+        logger.info(device)
         self.device = device
         self.init_model(device, **kwargs)
 
@@ -66,6 +68,7 @@ class InpaintModel:
         masks: [H, W]
         return: BGR IMAGE
         """
+        logger.info("base.py, __call__, start")
         inpaint_result = None
         logger.info(f"hd_strategy: {config.hd_strategy}")
         if config.hd_strategy == HDStrategy.CROP:
@@ -113,6 +116,7 @@ class InpaintModel:
         if inpaint_result is None:
             inpaint_result = self._pad_forward(image, mask, config)
 
+        logger.info("base.py, __call__, end")
         return inpaint_result
 
     def _crop_box(self, image, mask, box, config: Config):

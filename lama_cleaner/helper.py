@@ -37,6 +37,7 @@ def ceil_modulo(x, mod):
 
 
 def load_jit_model(url_or_path, device):
+    print("load_jit_model, device", device)
     if os.path.exists(url_or_path):
         model_path = url_or_path
     else:
@@ -61,6 +62,8 @@ def load_model(model: torch.nn.Module, url_or_path, device):
 
     try:
         state_dict = torch.load(model_path, map_location='cpu')
+        #print("load_model, device", device)
+        #state_dict = torch.load(model_path, map_location='cuda:0')
         model.load_state_dict(state_dict, strict=True)
         model.to(device)
         logger.info(f"Load model from: {model_path}")
@@ -89,7 +92,10 @@ def load_img(img_bytes, gray: bool = False):
     if gray:
         np_img = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
     else:
-        np_img = cv2.imdecode(nparr, cv2.IMREAD_UNCHANGED)
+        np_img = cv2.imdecode(nparr, cv2.IMREAD_COLOR) #IMREAD_UNCHANGED)
+        logger.info(f"np_img.shape {np_img.shape}")
+
+        
         if len(np_img.shape) == 3 and np_img.shape[2] == 4:
             alpha_channel = np_img[:, :, -1]
             np_img = cv2.cvtColor(np_img, cv2.COLOR_BGRA2RGB)

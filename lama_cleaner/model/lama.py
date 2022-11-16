@@ -19,6 +19,8 @@ class LaMa(InpaintModel):
     pad_mod = 8
 
     def init_model(self, device, **kwargs):
+        logger.info("lama.py, init_model, start")
+        logger.info(device)
         if os.environ.get("LAMA_MODEL"):
             model_path = os.environ.get("LAMA_MODEL")
             if not os.path.exists(model_path):
@@ -28,11 +30,13 @@ class LaMa(InpaintModel):
         else:
             model_path = download_model(LAMA_MODEL_URL)
         logger.info(f"Load LaMa model from: {model_path}")
-        model = torch.jit.load(model_path, map_location="cpu")
+        model = torch.jit.load(model_path, map_location="cuda:0")
+        #model = torch.jit.load(model_path, map_location="cpu")
         model = model.to(device)
         model.eval()
         self.model = model
         self.model_path = model_path
+        logger.info("lama.py, init_model, end")
 
     @staticmethod
     def is_downloaded() -> bool:
@@ -44,6 +48,8 @@ class LaMa(InpaintModel):
         mask: [H, W]
         return: BGR IMAGE
         """
+
+        logger.info("lama.py, forward, start")
         image = norm_img(image)
         mask = norm_img(mask)
 
@@ -51,9 +57,12 @@ class LaMa(InpaintModel):
         image = torch.from_numpy(image).unsqueeze(0).to(self.device)
         mask = torch.from_numpy(mask).unsqueeze(0).to(self.device)
 
+        logger.info("lama.py, forward, a")
         inpainted_image = self.model(image, mask)
+        logger.info("lama.py, forward, b")
 
         cur_res = inpainted_image[0].permute(1, 2, 0).detach().cpu().numpy()
         cur_res = np.clip(cur_res * 255, 0, 255).astype("uint8")
         cur_res = cv2.cvtColor(cur_res, cv2.COLOR_RGB2BGR)
+        logger.info("lama.py, forward, end")
         return cur_res

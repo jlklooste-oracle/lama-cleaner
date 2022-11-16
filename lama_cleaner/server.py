@@ -19,6 +19,8 @@ from loguru import logger
 from model_manager import ModelManager
 from schema import Config
 
+#from PIL import ImageOps # JK: Added
+
 try:
     torch._C._jit_override_can_fuse_on_cpu(False)
     torch._C._jit_override_can_fuse_on_gpu(False)
@@ -130,12 +132,19 @@ def process():
     if config.sd_seed == -1:
         config.sd_seed = random.randint(1, 9999999)
 
+    # JK: Adding this to rotate image if necessary (for images taking in portrait on mobile)
+    #image = ImageOps.exif_transpose(image)
+
     logger.info(f"Origin image shape: {original_shape}")
     image = resize_max_size(image, size_limit=size_limit, interpolation=interpolation)
     logger.info(f"Resized image shape: {image.shape}")
 
     mask, _ = load_img(input["mask"].read(), gray=True)
+    original_mask_shape = mask.shape # JK Added
+    logger.info(f"Origin mask shape: {original_mask_shape}") # JK Added
     mask = resize_max_size(mask, size_limit=size_limit, interpolation=interpolation)
+    resized_mask_shape = mask.shape # JK Added
+    logger.info(f"Resized mask shape: {resized_mask_shape}") # JK Added
 
     start = time.time()
     res_np_img = model(image, mask, config)
@@ -216,9 +225,13 @@ def main(args):
     global device
     global input_image_path
 
-    device = "cpu" #torch.device(args.device)
+
+    device = torch.device(args.device)
     input_image_path = args.input
     
+    logger.info("server.py")
+    logger.info(device)
+
     print("defaulting model to lama", file=sys.stderr)
 
     model = ModelManager(
